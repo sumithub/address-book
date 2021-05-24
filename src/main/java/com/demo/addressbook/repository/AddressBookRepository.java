@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface AddressBookRepository {
     AddressBook createByName(String name);
+    AddressBook findById(String id);
     void deleteById(String id);
     List<AddressBook> finaAll();
     void save(AddressBook addressBook);
