@@ -1,12 +1,14 @@
 package com.demo.addressbook.entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddressBook {
     private int id;
     private String name;
-    private List<Contact> contacts = new ArrayList<>();
+    private final Map<Integer, Contact> contactMap = new HashMap<>();
 
     public AddressBook(String name) {
         this.name = name;
@@ -15,11 +17,11 @@ public class AddressBook {
     public AddressBook() {}
 
     public void addContact(Contact contact) {
-        this.contacts.add(contact);
+        this.contactMap.put(contact.getId(), contact);
     }
 
     public void removeContact(Contact contact) {
-        this.contacts.remove(contact);
+        this.contactMap.remove(contact.getId());
     }
 
     public int getId() {
@@ -39,10 +41,6 @@ public class AddressBook {
     }
 
     public List<Contact> getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = contacts;
+        return new ArrayList<>(this.contactMap.values());
     }
 }

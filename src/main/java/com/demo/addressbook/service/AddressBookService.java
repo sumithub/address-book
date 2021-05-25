@@ -47,39 +47,37 @@ public class AddressBookService {
         return contact;
     }
 
-    public Contact updateContactInAddressBook(int addressBookId, Contact contact) {
+    public Contact updateContactInAddressBook(int addressBookId, Contact updatedContact) {
         AddressBook addressBook = addressBookRepository.findById(addressBookId);
 
         if (addressBook != null) {
-            boolean contactExists = isContactExists(addressBook, contact.getId());
-            if (contactExists)
-                addressBook.addContact(contact);
-            addressBookRepository.save(addressBook);
+            Optional<Contact> oldContact = getContactById(addressBook, updatedContact.getId());
+            if (oldContact.isPresent()) {
+                addressBook.addContact(updatedContact);
+                addressBookRepository.save(addressBook);
+            }
         }
-        return contact;
+        return updatedContact;
     }
 
     public void removeContactFromAddressBook(int addressBookId, int contactId) {
         AddressBook addressBook = addressBookRepository.findById(addressBookId);
 
         if (addressBook != null) {
-                Optional<Contact> contactToBeRemoved = addressBook
-                        .getContacts()
-                        .stream()
-                        .filter(contact -> contact.getId() == contactId)
-                        .findFirst();
-                if (contactToBeRemoved.isPresent())
+            Optional<Contact> contactToBeRemoved = getContactById(addressBook, contactId);
+            if (contactToBeRemoved.isPresent())
                     addressBook.removeContact(contactToBeRemoved.get());
                 addressBookRepository.save(addressBook);
             }
         }
 
-    private boolean isContactExists(AddressBook addressBook, int contactId) {
-        for (Contact c : addressBook.getContacts()) {
-            if (c.getId() == contactId)
-                return true;
-        }
-        return false;
+    private Optional<Contact> getContactById(AddressBook addressBook, int contactId) {
+        Optional<Contact> contact = addressBook
+                .getContacts()
+                .stream()
+                .filter(c -> c.getId() == contactId)
+                .findFirst();
+        return contact;
     }
 
     public List<Contact> findAllUniqueContacts() {
