@@ -1,4 +1,63 @@
 package com.demo.addressbook.entity;
 
+import java.util.List;
+import java.util.Objects;
+
 public class Contact {
+
+    private int id;
+    private String firstName;
+    private String lastName;
+    private List<String> phoneNumbers;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public List<String> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    public void setPhoneNumbers(List<String> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof Contact)) {
+            return false;
+        }
+        Contact contact = (Contact) obj;
+        return Objects.equals(firstName.toLowerCase(), contact.getFirstName().toLowerCase())
+                && Objects.equals(lastName.toLowerCase(), contact.getLastName().toLowerCase())
+                && phoneNumbers.containsAll(contact.getPhoneNumbers())
+                && contact.getPhoneNumbers().containsAll(phoneNumbers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName.toLowerCase(), lastName.toLowerCase(), phoneNumbers);
+    }
 }

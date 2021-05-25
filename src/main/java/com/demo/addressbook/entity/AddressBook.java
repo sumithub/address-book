@@ -1,17 +1,32 @@
 package com.demo.addressbook.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddressBook {
-    private String id;
+    private int id;
     private String name;
-    private List<Contact> contacts;
+    private List<Contact> contacts = new ArrayList<>();
 
-    public String getId() {
+    public AddressBook(String name) {
+        this.name = name;
+    }
+
+    public AddressBook() {}
+
+    public void addContact(Contact contact) {
+        this.contacts.add(contact);
+    }
+
+    public void removeContact(Contact contact) {
+        this.contacts.remove(contact);
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

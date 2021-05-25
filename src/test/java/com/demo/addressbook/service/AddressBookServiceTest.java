@@ -18,8 +18,9 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AddressBookServiceTest {
-    public static final String ID = "wXvCSd";
+    public static final int ID = 12;
     public static final String BOOK_NAME = "IT-DEPT";
+
     @MockBean
     AddressBookRepository addressBookRepository;
     @Autowired
@@ -28,14 +29,13 @@ public class AddressBookServiceTest {
     @Test
     void createNewAddressBook() {
         // given
-        AddressBook addressBook = new AddressBook();
+        AddressBook addressBook = new AddressBook(BOOK_NAME);
         addressBook.setId(ID);
-        addressBook.setName(BOOK_NAME);
 
-        when(addressBookRepository.createByName(BOOK_NAME)).thenReturn(addressBook);
+        when(addressBookRepository.save(addressBook)).thenReturn(addressBook);
 
         //when
-        AddressBook addressBookReturned = addressBookService.createNewAddressBook(BOOK_NAME);
+        AddressBook addressBookReturned = addressBookService.createNewAddressBook(addressBook);
 
         // then
         assertNotNull(addressBookReturned);
@@ -46,8 +46,8 @@ public class AddressBookServiceTest {
     @Test
     void getAllAddressBooks() {
         //given
-        List<AddressBook> addressBooks = Arrays.asList(new AddressBook(), new AddressBook());
-        when(addressBookRepository.finaAll()).thenReturn(addressBooks);
+        List<AddressBook> addressBooks = Arrays.asList(new AddressBook("AB-1"), new AddressBook("AB-2"));
+        when(addressBookRepository.findAll()).thenReturn(addressBooks);
 
         // when
         List<AddressBook> addressBookList = addressBookService.getAllAddressBooks();
@@ -60,9 +60,8 @@ public class AddressBookServiceTest {
     @Test
     void getAddressBookById() {
         // given
-        AddressBook addressBook = new AddressBook();
+        AddressBook addressBook = new AddressBook(BOOK_NAME);
         addressBook.setId(ID);
-        addressBook.setName(BOOK_NAME);
 
         when(addressBookRepository.findById(ID)).thenReturn(addressBook);
 

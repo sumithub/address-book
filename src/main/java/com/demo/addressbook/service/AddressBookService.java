@@ -1,10 +1,12 @@
 package com.demo.addressbook.service;
 
 import com.demo.addressbook.entity.AddressBook;
+import com.demo.addressbook.entity.Contact;
 import com.demo.addressbook.repository.AddressBookRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AddressBookService {
@@ -14,15 +16,84 @@ public class AddressBookService {
         this.addressBookRepository = addressBookRepository;
     }
 
-    public AddressBook createNewAddressBook(String name) {
-        return addressBookRepository.createByName(name);
+    public AddressBook createNewAddressBook(AddressBook addressBook) {
+        return addressBookRepository.save(addressBook);
     }
 
     public List<AddressBook> getAllAddressBooks() {
-        return addressBookRepository.finaAll();
+        return addressBookRepository.findAll();
     }
 
-    public AddressBook getAddressBookById(String id) {
+    public AddressBook getAddressBookById(int id) {
         return addressBookRepository.findById(id);
+    }
+
+    public List<Contact> getAllContactsInAddressBook(int id) {
+        AddressBook addressBook = addressBookRepository.findById(id);
+        if (addressBook != null)
+            return addressBook.getContacts();
+        return new ArrayList<>();
+    }
+
+
+    public Contact addContactToAddressBook(int addressBookId, Contact contact) {
+        AddressBook addressBook = addressBookRepository.findById(addressBookId);
+
+        if (addressBook != null) {
+            contact.setId(Math.abs(contact.hashCode()));
+            addressBook.addContact(contact);
+            addressBookRepository.save(addressBook);
+        }
+        return contact;
+    }
+
+    public Contact updateContactInAddressBook(int addressBookId, Contact contact) {
+        AddressBook addressBook = addressBookRepository.findById(addressBookId);
+
+        if (addressBook != null) {
+            boolean contactExists = isContactExists(addressBook, contact.getId());
+            if (contactExists)
+                addressBook.addContact(contact);
+            addressBookRepository.save(addressBook);
+        }
+        return contact;
+    }
+
+    public void removeContactFromAddressBook(int addressBookId, int contactId) {
+        AddressBook addressBook = addressBookRepository.findById(addressBookId);
+
+        if (addressBook != null) {
+                Optional<Contact> contactToBeRemoved = addressBook
+                        .getContacts()
+                        .stream()
+                        .filter(contact -> contact.getId() == contactId)
+                        .findFirst();
+                if (contactToBeRemoved.isPresent())
+                    addressBook.removeContact(contactToBeRemoved.get());
+                addressBookRepository.save(addressBook);
+            }
+        }
+
+    private boolean isContactExists(AddressBook addressBook, int contactId) {
+        for (Contact c : addressBook.getContacts()) {
+            if (c.getId() == contactId)
+                return true;
+        }
+        return false;
+    }
+
+    public List<Contact> findAllUniqueContacts() {
+        List<Contact> contacts = new ArrayList<>();
+        List<AddressBook> addressBooks = addressBookRepository.findAll();
+        for (AddressBook addressBook: addressBooks)
+            contacts.addAll(addressBook.getContacts());
+        return contacts
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    public void deleteAddressBookById(int id) {
+         addressBookRepository.deleteById(id);
     }
 }
