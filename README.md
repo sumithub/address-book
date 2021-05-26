@@ -43,9 +43,9 @@ Address Book Assignment developed with Java and Spring Boot
         "name": "finance contacts"
      }
 
-     Response:
+     Response: 201 Created
      {
-      "id": 93921896,
+      "id": 762698279,
       "name": "finance contacts",
       "contacts": []
     }
@@ -53,16 +53,82 @@ Address Book Assignment developed with Java and Spring Boot
    2. Add Contact in Address Book
    
      POST http://localhost:8080/api/v1/address-books/{addressBookId}/contacts
+     
+     ex: POST http://localhost:8080/api/v1/address-books/762698279/contacts
 
-     Payload:
+     Payload: 
      {
-          "firstName": "first",
-          "lastName": "last",
+        "firstName": "John",
+        "lastName": "Moore",
+        "phoneNumbers": [
+           "12343356",
+           "566554433"
+          ]
+      }
+      
+      Response: 201 Created
+    {
+      "id": 767781373,
+      "firstName": "John",
+      "lastName": "Moore",
+      "phoneNumbers": [
+         "12343356",
+         "566554433"
+      ]
+    }
+   
+   3. Get Contact list in Address Book
+   
+    GET http://localhost:8080/api/v1/address-books/762698279
+
+     Response: 200 OK
+      {
+          "id": 767781373,
+          "firstName": "John",
+          "lastName": "Moore",
           "phoneNumbers": [
               "12343356",
               "566554433"
           ]
       }
+    ]
+
+  4. Update Contact in Address Book
+
+    PUT http://localhost:8080/api/v1/address-books/762698279/contacts
+
+    Payload:
+    {
+        "id": 767781373,
+        "firstName": "Josh",
+        "lastName": "Mayor",
+        "phoneNumbers": [
+           "12343356"
+           ]
+        }
+    Response: 200 OK
+    {
+        "id": 767781373,
+        "firstName": "Josh",
+        "lastName": "Mayor",
+        "phoneNumbers": [
+            "12343356"
+        ]
+    }
+   
+  5. Get list of all Address Books
+
+    GET http://localhost:8080/api/v1/address-books
+    
+  6. Get unique set of Contacts across all Address Books
+ 
+    GET http://localhost:8080/api/v1/address-books/unique-contacts
+    
+  7. Delete contact in Address Book
+
+    DELETE http://localhost:8080/api/v1/address-book/{addressId}/contact/{contactId}
+  
+    ex: DELETE http://localhost:8080/api/v1/address-book/1383388594/contact/1964920837
    
 
 
