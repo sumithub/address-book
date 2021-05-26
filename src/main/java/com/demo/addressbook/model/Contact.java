@@ -1,4 +1,4 @@
-package com.demo.addressbook.entity;
+package com.demo.addressbook.model;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

@@ -1,7 +1,7 @@
 package com.demo.addressbook.controller;
 
-import com.demo.addressbook.entity.AddressBook;
-import com.demo.addressbook.entity.Contact;
+import com.demo.addressbook.model.AddressBook;
+import com.demo.addressbook.model.Contact;
 import com.demo.addressbook.service.AddressBookServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

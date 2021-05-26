@@ -1,4 +1,4 @@
-package com.demo.addressbook.Exception;
+package com.demo.addressbook.exception;
 
 import java.util.List;
 

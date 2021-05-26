@@ -1,6 +1,6 @@
 package com.demo.addressbook.repository;
 
-import com.demo.addressbook.entity.AddressBook;
+import com.demo.addressbook.model.AddressBook;
 import java.util.List;
 
 public interface AddressBookRepository {

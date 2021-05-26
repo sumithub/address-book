@@ -1,7 +1,7 @@
 package com.demo.addressbook.service;
 
-import com.demo.addressbook.entity.AddressBook;
-import com.demo.addressbook.entity.Contact;
+import com.demo.addressbook.model.AddressBook;
+import com.demo.addressbook.model.Contact;
 
 import java.util.List;
 
