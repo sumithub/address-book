@@ -17,6 +17,10 @@ public class AddressBook {
     public AddressBook(String name) {
         this.name = name;
     }
+    public AddressBook(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public AddressBook() {}
 

@@ -1,6 +1,7 @@
 package com.demo.addressbook.repository;
 
 import com.demo.addressbook.model.AddressBook;
+import com.demo.addressbook.model.Contact;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -25,10 +26,14 @@ public class AddressBookRepositoryImpl implements AddressBookRepository {
     }
 
     @Override
-    public AddressBook save(AddressBook addressBook) {
-        if (addressBook.getId() <= 0 && addressBook.getName() != null)
-            addressBook.setId(generateID(addressBook.getName()));
+    public List<Contact> listAddressBookContacts(AddressBook addressBook) {
+        return addressBook.getContacts();
+    }
 
+    @Override
+    public AddressBook save(AddressBook addressBook) {
+        if (addressBook.getId() <= 0)
+            addressBook.setId(generateID(addressBook.getName()));
         this.updateAddressMap(addressBook);
         return addressBookMap.get(addressBook.getId());
     }
@@ -44,7 +49,7 @@ public class AddressBookRepositoryImpl implements AddressBookRepository {
         this.addressBookMap.remove(id);
     }
 
-    private int generateID(String name) {
+    public int generateID(String name) {
         return Math.abs(name.toLowerCase().hashCode());
     }
 }

@@ -59,7 +59,7 @@ public class AddressBookServiceImpl implements AddressBookService {
         if (addressBook == null)
             throw new ResourceNotFoundException("Address Book with given ID doesn't exist");
 
-        return addressBook.getContacts();
+        return addressBookRepository.listAddressBookContacts(addressBook);
     }
 
     @Override
