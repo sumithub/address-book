@@ -33,7 +33,7 @@ Address Book Assignment developed with Java and Spring Boot
    
     $ docker run -p 8080:8080 address-book/address-book-docker
    
-   API Endpoints
+   API ENDPOINTS
    1. Create new Address Book
    
     POST http://localhost:8080/api/v1/address-books
@@ -78,8 +78,10 @@ Address Book Assignment developed with Java and Spring Boot
     }
    
    3. Get Contact list in Address Book
+
+    GET http://localhost:8080/api/v1/address-books/{addressId}
    
-    GET http://localhost:8080/api/v1/address-books/762698279
+    ex: GET http://localhost:8080/api/v1/address-books/762698279
 
      Response: 200 OK
       {
@@ -94,8 +96,10 @@ Address Book Assignment developed with Java and Spring Boot
     ]
 
   4. Update Contact in Address Book
-
-    PUT http://localhost:8080/api/v1/address-books/762698279/contacts
+    
+    PUT http://localhost:8080/api/v1/address-books/{addressId}/contacts
+    
+    ex: PUT http://localhost:8080/api/v1/address-books/762698279/contacts
 
     Payload:
     {
@@ -129,6 +133,12 @@ Address Book Assignment developed with Java and Spring Boot
     DELETE http://localhost:8080/api/v1/address-book/{addressId}/contact/{contactId}
   
     ex: DELETE http://localhost:8080/api/v1/address-book/1383388594/contact/1964920837
+   
+  8. Delete Address Book
+     
+    DELETE http://localhost:8080/api/v1/address-book/{addressId}/
+    
+    ex: DELETE http://localhost:8080/api/v1/address-book/762698279/
    
 
 
