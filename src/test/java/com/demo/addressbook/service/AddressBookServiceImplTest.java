@@ -3,6 +3,7 @@ package com.demo.addressbook.service;
 import com.demo.addressbook.model.AddressBook;
 import com.demo.addressbook.model.Contact;
 import com.demo.addressbook.repository.AddressBookRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,6 +33,7 @@ public class AddressBookServiceImplTest {
     AddressBookServiceImpl addressBookService;
 
     @Test
+    @DisplayName("Given new address name should create new address book")
     void testCreateNewAddressBook() {
         // given
         AddressBook addressBook = new AddressBook(ID_1, ADDRESS_BOOK_NAME_1);
@@ -49,6 +51,7 @@ public class AddressBookServiceImplTest {
     }
 
     @Test
+    @DisplayName("Lists the address books")
     void testListAllAddressBooks() {
         //given
         List<AddressBook> addressBooks = Arrays.asList(new AddressBook("AB-1"), new AddressBook("AB-2"));
@@ -63,6 +66,7 @@ public class AddressBookServiceImplTest {
     }
 
     @Test
+    @DisplayName("Given Address Book ID should find Address Book")
     void testFindAddressBook() {
         // given
         AddressBook addressBook = new AddressBook(ID_1, ADDRESS_BOOK_NAME_1);
