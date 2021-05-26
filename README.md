@@ -33,7 +33,7 @@ Address Book Assignment developed with Java and Spring Boot
    
     $ docker run -p 8080:8080 address-book/address-book-docker
    
-   API ENDPOINTS
+ # API Endpoints
    1. Create new Address Book
    
     POST http://localhost:8080/api/v1/address-books
@@ -140,7 +140,7 @@ Address Book Assignment developed with Java and Spring Boot
     
     ex: DELETE http://localhost:8080/api/v1/address-book/762698279/
    
-   API DOCS
+   # API DOCS
    
      http://localhost:8080/swagger-ui.html
 
