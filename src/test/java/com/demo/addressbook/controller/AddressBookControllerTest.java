@@ -116,7 +116,7 @@ public class AddressBookControllerTest {
         List<Contact> contactList = addressBook.getContacts();
         when(addressBookService.listAllContactsInAddressBook(addressBook.getId())).thenReturn(contactList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL+"/1")
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL+"/1/contacts")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -141,7 +141,7 @@ public class AddressBookControllerTest {
 
         when(addressBookService.listAllUniqueContacts()).thenReturn(Collections.singletonList(contact_1));
 
-        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL+"/contacts")
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL+"/unique-contacts")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -175,7 +175,7 @@ public class AddressBookControllerTest {
     public void testResourceNotFoundException() throws Exception {
         when(addressBookService.listAllContactsInAddressBook(anyInt())).thenThrow(ResourceNotFoundException.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/34")
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/34/contacts")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

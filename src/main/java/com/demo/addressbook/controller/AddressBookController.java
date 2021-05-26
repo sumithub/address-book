@@ -44,13 +44,13 @@ public class AddressBookController {
         return addressBookService.updateContactInAddressBook(addressBookId, contact);
     }
 
-    @GetMapping({"/{addressBookId}"})
+    @GetMapping({"/{addressBookId}/contacts"})
     @ResponseStatus(HttpStatus.OK)
     public List<Contact> getAllContactsInAddressBook(@PathVariable int addressBookId) {
         return addressBookService.listAllContactsInAddressBook(addressBookId);
     }
 
-    @GetMapping({"/contacts"})
+    @GetMapping({"/unique-contacts"})
     @ResponseStatus(HttpStatus.OK)
     public List<Contact> getAllUniqueContacts() {
         return addressBookService.listAllUniqueContacts();
