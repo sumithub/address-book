@@ -140,5 +140,8 @@ Address Book Assignment developed with Java and Spring Boot
     
     ex: DELETE http://localhost:8080/api/v1/address-book/762698279/
    
+   API DOCS
+   
+     http://localhost:8080/swagger-ui.html
 
 
