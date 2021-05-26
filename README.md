@@ -4,17 +4,17 @@ Address Book Assignment developed with Java and Spring Boot
 # REST API Features
   - Address book will hold name and phone numbers of contact entries
 
-  - Create a REST API which will have endpoints for the following -
+  - REST API have endpoints for the following -
 
-  - Users should be able to add new contact entries 
-  
-  - Users should be able to remove existing contact entries
-  
-  - Users should be able to print all contacts in an address book
-  
-  - Users should be able to maintain multiple address books
-  
-  - Users should be able to print a unique set of all contacts across multiple address books
+    - Users should be able to add new contact entries 
+
+    - Users should be able to remove existing contact entries
+
+    - Users should be able to print all contacts in an address book
+
+    - Users should be able to maintain multiple address books
+
+    - Users should be able to print a unique set of all contacts across multiple address books
   
   # How to start up the REST API
    Test
