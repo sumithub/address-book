@@ -2,7 +2,7 @@ package com.demo.addressbook.controller;
 
 import com.demo.addressbook.model.AddressBook;
 import com.demo.addressbook.model.Contact;
-import com.demo.addressbook.service.AddressBookServiceImpl;
+import com.demo.addressbook.service.AddressBookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping(AddressBookController.BASE_URL)
 public class AddressBookController {
 
-    public static final String BASE_URL = "/api/v1/address-book";
-    private final AddressBookServiceImpl addressBookService;
+    public static final String BASE_URL = "/api/v1/address-books";
+    private final AddressBookService addressBookService;
 
-    public AddressBookController(AddressBookServiceImpl addressBookService) {
+    public AddressBookController(AddressBookService addressBookService) {
         this.addressBookService = addressBookService;
     }
 
