@@ -2,6 +2,7 @@ package com.demo.addressbook.controller;
 import com.demo.addressbook.model.AddressBook;
 import com.demo.addressbook.model.Contact;
 import com.demo.addressbook.service.AddressBookService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,6 +32,7 @@ public class AddressBookControllerTest {
     private MockMvc mockMvc;
 
     private static List<AddressBook> addressBookList;
+    public static final String BASE_URL = "/api/v1/address-books";
 
     @BeforeAll
     public static void init() {
@@ -47,14 +48,13 @@ public class AddressBookControllerTest {
         addressBook.addContact(contact_1);
         addressBookList = new ArrayList<>();
         addressBookList.add(addressBook);
-        System.out.println(addressBookList.size());
     }
 
     @Test
     void testGetListOfAddressBooks() throws Exception {
         when(addressBookService.listAllAddressBooks()).thenReturn(addressBookList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/address-books")
+        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -62,11 +62,31 @@ public class AddressBookControllerTest {
     }
 
     @Test
-    void testCreateNewAddressBook() {
+    void testCreateNewAddressBook() throws Exception {
+        AddressBook addressBook = new AddressBook("finance");
+        addressBook.setId(1);
+        when(addressBookService.createNewAddressBook(any())).thenReturn(addressBook);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJsonString(addressBook)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name", equalTo("finance")));
+        verify(addressBookService, times(1)).createNewAddressBook(any());
     }
 
     @Test
-    void testCreateContactInAddressBook() {
+    void testCreateContactInAddressBook() throws Exception {
+        AddressBook addressBook = addressBookList.get(0);
+        Contact contact = addressBook.getContacts().get(0);
+        when(addressBookService.addContactToAddressBook(addressBook.getId(), contact)).thenReturn(contact);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL+"/1/contacts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJsonString(contact)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.firstName", equalTo("John")));
+        verify(addressBookService, times(1)).addContactToAddressBook(addressBook.getId(), contact);
     }
 
     @Test
@@ -87,5 +107,13 @@ public class AddressBookControllerTest {
 
     @Test
     void testDeleteContactFromAddressBook() {
+    }
+
+    private static String toJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
