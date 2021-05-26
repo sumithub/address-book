@@ -1,13 +1,21 @@
 package com.demo.addressbook.entity;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
 public class Contact {
 
     private int id;
+    @NotEmpty(message = "First Name couldn't be empty")
+    @NotNull(message = "Required First Name value is null")
     private String firstName;
+
+    @NotEmpty(message = "Last Name couldn't be empty")
+    @NotNull(message = "Required Last Name value is null")
     private String lastName;
+
     private List<String> phoneNumbers;
 
     public int getId() {

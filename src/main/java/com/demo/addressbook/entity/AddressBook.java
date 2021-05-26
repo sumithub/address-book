@@ -1,5 +1,7 @@
 package com.demo.addressbook.entity;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +9,8 @@ import java.util.Map;
 
 public class AddressBook {
     private int id;
+    @NotEmpty(message = "Name couldn't be empty")
+    @NotNull(message = "Required Name value is null")
     private String name;
     private final Map<Integer, Contact> contactMap = new HashMap<>();
 
